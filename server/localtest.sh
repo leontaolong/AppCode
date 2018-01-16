@@ -1,2 +1,2 @@
 export HOST=localhost
-export PORT=888
+export PORT=8888
