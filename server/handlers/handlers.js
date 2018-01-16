@@ -3,7 +3,6 @@
 const express = require('express');
 
 //export a function from this module 
-//that accepts a tasks store implementation
 module.exports = function() {
     //create a new Mux
     let router = express.Router();
