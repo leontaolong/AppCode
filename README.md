@@ -4,4 +4,4 @@
 - Annoyed by entering account and course info everytime gettting a notify?
 - Just not fast enough than others?
 
-## Grab the spot with just one click. Appcode is your new AddCode. 
+## Grab the spot with just one click. AppCode is your new AddCode. 
