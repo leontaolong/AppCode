@@ -1,4 +1,7 @@
+# MacOS
 .DS_Store
+
+# Node Server
 node_modules
 tls
 
