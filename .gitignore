@@ -17,3 +17,8 @@ xcuserdata/
 
 # Podfiles
 Pods/
+
+# SSL
+encrypt
+*.csr
+*.key

@@ -11,7 +11,7 @@ let Utils = {
         console.log("WebDriver successfully built.")
 
         try {
-            await driver.get(rçegisterUrl);
+            await driver.get(registerUrl);
 
             // login with credentials
             await driver.findElement(By.id('weblogin_netid')).sendKeys(courseInfo.username);
@@ -19,7 +19,7 @@ let Utils = {
             await driver.findElement(By.xpath('//*[@id="main"]/div[1]/form/ul[2]/li/input')).click();
             // await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
         } finally {
-            // await driver.quit();
+            await driver.quit();
         }
     }
 }
