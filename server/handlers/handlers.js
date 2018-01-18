@@ -11,7 +11,7 @@ module.exports = function() {
 
     router.post('/v1/course', (req, res, next) => {
         let infoJSON = req.body;
-        if (!infoJSON.username || !infoJSON.password || !infoJSON.sln) { // handle request error
+        if (!infoJSON || !infoJSON.username || !infoJSON.password || !infoJSON.sln1) { // handle request error
             res.status(400).send("Bad Request Error: information missing")
         } else {
             var info = new CourseInfo(infoJSON);

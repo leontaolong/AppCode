@@ -4,7 +4,8 @@ class CourseInfo {
     constructor(infoJSON) {
         this.username = infoJSON.username;
         this.password = infoJSON.password;
-        this.sln = infoJSON.sln;
+        this.sln1 = infoJSON.sln1;
+        this.sln2 = infoJSON.sln2;
     }
 }
 
