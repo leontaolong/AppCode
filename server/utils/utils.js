@@ -11,7 +11,7 @@ let Utils = {
         console.log("WebDriver successfully built.")
 
         try {
-            await driver.get(loginTestUrl));
+            await driver.get(rçegisterUrl);
 
             // login with credentials
             await driver.findElement(By.id('weblogin_netid')).sendKeys(courseInfo.username);
