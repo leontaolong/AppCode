@@ -25,11 +25,11 @@ var options = {
     cert: fs.readFileSync(certPath),
 };
 
-https.createServer(options, app).listen(port, function(){
+https.createServer(options, app).listen(port, () => {
     console.log(`server running at ${port} ...`)
 });
 
-http.createServer(app).listen(httpPort, function(){
+http.createServer(app).listen(httpPort, () => {
     console.log(`server running at ${httpPort} ...`)
 });
 

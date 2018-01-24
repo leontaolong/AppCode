@@ -19,7 +19,7 @@ let Utils = {
             await driver.findElement(By.xpath('//*[@id="main"]/div[1]/form/ul[2]/li/input')).click();
             // await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
         } finally {
-            await driver.quit();
+            // await driver.quit();
         }
     }
 }
