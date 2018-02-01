@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  FirstViewController.swift
 //  AppCode
 //
-//  Created by LEON LOONG on 1/16/18.
+//  Created by LEON LOONG on 2/1/18.
 //  Copyright © 2018 leontaolong. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class FirstViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
