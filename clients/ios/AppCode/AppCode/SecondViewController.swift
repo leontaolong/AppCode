@@ -27,6 +27,12 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func btnUpdate(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Updated Successfully!", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Done", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
