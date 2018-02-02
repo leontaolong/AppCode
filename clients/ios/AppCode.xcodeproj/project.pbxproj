@@ -15,6 +15,7 @@
 		3500747C2023095B000BD808 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3500747A2023095B000BD808 /* LaunchScreen.storyboard */; };
 		350074872023095B000BD808 /* AppCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350074862023095B000BD808 /* AppCodeTests.swift */; };
 		350074922023095B000BD808 /* AppCodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350074912023095B000BD808 /* AppCodeUITests.swift */; };
+		350074A22023B3D2000BD808 /* CourseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350074A12023B3D2000BD808 /* CourseInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		3500748D2023095B000BD808 /* AppCodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppCodeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		350074912023095B000BD808 /* AppCodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCodeUITests.swift; sourceTree = "<group>"; };
 		350074932023095B000BD808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		350074A12023B3D2000BD808 /* CourseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				3500746F2023095B000BD808 /* AppDelegate.swift */,
 				350074712023095B000BD808 /* FirstViewController.swift */,
 				350074732023095B000BD808 /* SecondViewController.swift */,
+				350074A12023B3D2000BD808 /* CourseInfoViewController.swift */,
 				350074752023095B000BD808 /* Main.storyboard */,
 				350074782023095B000BD808 /* Assets.xcassets */,
 				3500747A2023095B000BD808 /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 			files = (
 				350074742023095B000BD808 /* SecondViewController.swift in Sources */,
 				350074702023095B000BD808 /* AppDelegate.swift in Sources */,
+				350074A22023B3D2000BD808 /* CourseInfoViewController.swift in Sources */,
 				350074722023095B000BD808 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

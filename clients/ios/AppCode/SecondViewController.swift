@@ -16,8 +16,9 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.emailText.delegate = self;
-        self.pwdText.delegate = self;
+        // register textfield delegates
+        emailText.delegate = self;
+        pwdText.delegate = self;
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -28,7 +29,7 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnUpdate(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Updated Successfully!", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Success", message: "Account Info Updated Successfully!", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Done", style: .default))
         self.present(alert, animated: true, completion: nil)
     }
