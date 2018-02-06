@@ -5,3 +5,7 @@
 - Just not as fast enough as others?
 
 ## Grab the spot with just one click. AppCode is your new add code. 
+
+## Architecture
+![architecture](./doc/architecture.png)
+
