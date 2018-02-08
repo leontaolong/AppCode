@@ -15,11 +15,24 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var iptSLN2: UITextField!
     @IBOutlet weak var iptSLN3: UITextField!
     
+    private var courses:[Dictionary<String,String>] = []
+    private let db = UserDefaults.standard
+    
     @IBAction func btnCancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func btnDone(_ sender: UIButton) {
+        let courseInfo = ["displayName":iptDisplayName.text,
+                          "sln1": iptSLN1.text,
+                          "sln2": iptSLN2.text,
+                          "sln3": iptSLN3.text]
+        if (db.array(forKey: "courses") != nil) {
+            courses = db.array(forKey: "courses") as! [Dictionary<String, String>]
+        }
+        courses.append(courseInfo as! [String : String])
+        db.set(courses, forKey: "courses")
+        
         dismiss(animated: true, completion: nil)
     }
     
