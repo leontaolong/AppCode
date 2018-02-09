@@ -20,7 +20,7 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         
         // remove cell border
-        self.CourseTBView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.CourseTBView.separatorStyle = .none
         
         CourseTBView.delegate = self
         CourseTBView.dataSource = self
@@ -30,7 +30,7 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     //Called, when long press occurred
     @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
-            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            let touchPoint = longPressGestureRecognizer.location(in: self.CourseTBView)
             if let indexPath = CourseTBView.indexPathForRow(at: touchPoint) {
                 arrIndex = indexPath.row
                 self.performSegue(withIdentifier: "CourseInfoSegue", sender: self)
@@ -73,7 +73,7 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
         
         let course = courses[indexPath.row]
         cell?.CourseDisplayName.text = course["displayName"]
-        
+        cell?.selectionStyle = .none
         cell?.isUserInteractionEnabled = true
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
         cell?.addGestureRecognizer(gestureRecognizer)

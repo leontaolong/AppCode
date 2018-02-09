@@ -15,6 +15,7 @@
 		350074872023095B000BD808 /* AppCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350074862023095B000BD808 /* AppCodeTests.swift */; };
 		350074922023095B000BD808 /* AppCodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350074912023095B000BD808 /* AppCodeUITests.swift */; };
 		350074A22023B3D2000BD808 /* CourseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350074A12023B3D2000BD808 /* CourseInfoViewController.swift */; };
+		358A0B43202D97FF00C4FC6C /* CourseAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358A0B42202D97FF00C4FC6C /* CourseAddingViewController.swift */; };
 		F6F07B22202CC2AC00336AFD /* CoursesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F07B21202CC2AC00336AFD /* CoursesTableViewCell.swift */; };
 		F6F07B24202CD4D700336AFD /* CourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F07B23202CD4D700336AFD /* CourseTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		350074912023095B000BD808 /* AppCodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCodeUITests.swift; sourceTree = "<group>"; };
 		350074932023095B000BD808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		350074A12023B3D2000BD808 /* CourseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfoViewController.swift; sourceTree = "<group>"; };
+		358A0B42202D97FF00C4FC6C /* CourseAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAddingViewController.swift; sourceTree = "<group>"; };
 		F6F07B21202CC2AC00336AFD /* CoursesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesTableViewCell.swift; sourceTree = "<group>"; };
 		F6F07B23202CD4D700336AFD /* CourseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +105,7 @@
 		3500746E2023095B000BD808 /* AppCode */ = {
 			isa = PBXGroup;
 			children = (
+				358A0B42202D97FF00C4FC6C /* CourseAddingViewController.swift */,
 				3500746F2023095B000BD808 /* AppDelegate.swift */,
 				350074732023095B000BD808 /* SecondViewController.swift */,
 				350074A12023B3D2000BD808 /* CourseInfoViewController.swift */,
@@ -270,6 +273,7 @@
 			files = (
 				350074742023095B000BD808 /* SecondViewController.swift in Sources */,
 				350074702023095B000BD808 /* AppDelegate.swift in Sources */,
+				358A0B43202D97FF00C4FC6C /* CourseAddingViewController.swift in Sources */,
 				350074A22023B3D2000BD808 /* CourseInfoViewController.swift in Sources */,
 				F6F07B22202CC2AC00336AFD /* CoursesTableViewCell.swift in Sources */,
 				F6F07B24202CD4D700336AFD /* CourseTableViewController.swift in Sources */,
