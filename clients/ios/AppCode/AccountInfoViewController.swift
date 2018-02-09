@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController, UITextFieldDelegate {
+class AccountInfoViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var pwdText: UITextField!
