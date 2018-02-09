@@ -14,6 +14,9 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
      
     private var courses:[Dictionary<String,String>] = []
     private let db = UserDefaults.standard
+    public var arrIndex = 0
+    public var fromCell = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,6 +64,21 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
         let course = courses[indexPath.row]
         cell?.CourseDisplayName.text = course["displayName"]
         return cell!
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        arrIndex = indexPath.row
+        fromCell = true
+        self.performSegue(withIdentifier: "CourseInfoSegue", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CourseInfoSegue" {
+            let destination = segue.destination as! CourseInfoViewController
+            destination.arrIndex = arrIndex
+        }
     }
  
 

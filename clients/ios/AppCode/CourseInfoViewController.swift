@@ -17,6 +17,8 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
     
     private var courses:[Dictionary<String,String>] = []
     private let db = UserDefaults.standard
+    public var arrIndex = 0
+    public var fromCell = false
     
     @IBAction func btnCancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -27,12 +29,16 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
                           "sln1": iptSLN1.text,
                           "sln2": iptSLN2.text,
                           "sln3": iptSLN3.text]
-        if (db.array(forKey: "courses") != nil) {
-            courses = db.array(forKey: "courses") as! [Dictionary<String, String>]
+        if fromCell {
+            courses[arrIndex] = courseInfo as! [String : String]
+        } else {
+            courses.append(courseInfo as! [String : String])
         }
-        courses.append(courseInfo as! [String : String])
         db.set(courses, forKey: "courses")
-        
+        if let navController = self.navigationController, navController.viewControllers.count >= 2 {
+            let prevViewController = navController.viewControllers[navController.viewControllers.count - 2] as! CourseTableViewController
+            prevViewController.fromCell = false
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -44,6 +50,14 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
         iptSLN1.delegate = self
         iptSLN2.delegate = self
         iptSLN3.delegate = self
+        
+        if (db.array(forKey: "courses") != nil) {
+            courses = db.array(forKey: "courses") as! [Dictionary<String, String>]
+        }
+        
+        if fromCell {
+            renderData()
+        }
 
         // Do any additional setup after loading the view.
     }
@@ -63,6 +77,14 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
         iptSLN1.resignFirstResponder()
         iptSLN2.resignFirstResponder()
         iptSLN3.resignFirstResponder()
+    }
+    
+    func renderData() {
+        var courseSelected = courses[arrIndex]
+        iptDisplayName.text = courseSelected["displayName"]
+        iptSLN1.text = courseSelected["sln1"]
+        iptSLN2.text = courseSelected["sln2"]
+        iptSLN3.text = courseSelected["sln3"]
     }
 
     /*

@@ -12,7 +12,7 @@
         <!--Courses-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="CourseTableViewController" customModule="AppCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" customClass="CourseTableViewController" customModule="AppCode" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN" customClass="CourseInfo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -82,6 +82,7 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="CourseTBView" destination="q0u-cY-BII" id="M9X-1V-EGe"/>
+                        <segue destination="Grm-eq-qsn" kind="show" id="pRH-RP-I7f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -387,4 +388,7 @@
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="pRH-RP-I7f"/>
+    </inferredMetricsTieBreakers>
 </document>
