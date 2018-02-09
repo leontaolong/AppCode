@@ -19,11 +19,12 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // remove cell border
-        self.CourseTBView.separatorStyle = .none
-        
+        // adjust CourseTBView UI and register delegates
+        CourseTBView.separatorStyle = .none
+        CourseTBView.contentInset = UIEdgeInsets(top: 20,left: 0,bottom: 0,right: 0)
         CourseTBView.delegate = self
         CourseTBView.dataSource = self
+        
         loadCourses()
     }
     
