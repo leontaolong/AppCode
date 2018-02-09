@@ -17,12 +17,30 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // tapRecognizer, placed in viewDidLoad
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: Selector(("longPress:")))
+        
+        self.view.addGestureRecognizer(longPressRecognizer)
+        
         // remove cell border
         self.CourseTBView.separatorStyle = UITableViewCellSeparatorStyle.none
         
         CourseTBView.delegate = self
         CourseTBView.dataSource = self
         loadCourses()
+    }
+    
+    //Called, when long press occurred
+    func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
+
+            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            if let indexPath = CourseTBView.indexPathForRow(at: touchPoint) {
+                var index = indexPath.row
+                
+            }
+        }
     }
     
     private func loadCourses() {
