@@ -57,6 +57,5 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
         emailText.resignFirstResponder()
         pwdText.resignFirstResponder()
     }
-
 }
 

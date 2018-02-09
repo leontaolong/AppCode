@@ -24,7 +24,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Grm-eq-qsn" kind="show" id="7De-md-E8q"/>
+                                    <segue destination="Grm-eq-qsn" kind="show" identifier="CourseInfoSegue" id="7De-md-E8q"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="q0u-cY-BII">
@@ -82,7 +82,6 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="CourseTBView" destination="q0u-cY-BII" id="M9X-1V-EGe"/>
-                        <segue destination="Grm-eq-qsn" kind="show" id="pRH-RP-I7f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -250,7 +249,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="DELETE"/>
                                         <connections>
-                                            <action selector="btnUpdate:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="q4m-tV-9g6"/>
+                                            <action selector="deletePressed:" destination="Grm-eq-qsn" eventType="touchUpInside" id="Lnh-8z-amy"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zi2-lE-Ed0">
@@ -388,7 +387,4 @@
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="pRH-RP-I7f"/>
-    </inferredMetricsTieBreakers>
 </document>

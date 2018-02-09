@@ -18,7 +18,6 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
     private var courses:[Dictionary<String,String>] = []
     private let db = UserDefaults.standard
     public var arrIndex = 0
-    public var fromCell = false
     
     @IBAction func btnCancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -29,17 +28,21 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
                           "sln1": iptSLN1.text,
                           "sln2": iptSLN2.text,
                           "sln3": iptSLN3.text]
-        if fromCell {
-            courses[arrIndex] = courseInfo as! [String : String]
-        } else {
-            courses.append(courseInfo as! [String : String])
-        }
+
+        courses[arrIndex] = courseInfo as! [String : String]
         db.set(courses, forKey: "courses")
-        if let navController = self.navigationController, navController.viewControllers.count >= 2 {
-            let prevViewController = navController.viewControllers[navController.viewControllers.count - 2] as! CourseTableViewController
-            prevViewController.fromCell = false
-        }
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func deletePressed(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Warning", message: "Are you sure that you want to delete this course from the course list?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel ))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ action in
+            self.courses.remove(at: self.arrIndex)
+            self.db.set(self.courses, forKey: "courses")
+            self.dismiss(animated: true, completion: nil)}))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -54,14 +57,9 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
         if (db.array(forKey: "courses") != nil) {
             courses = db.array(forKey: "courses") as! [Dictionary<String, String>]
         }
-        
-        if fromCell {
-            renderData()
-        }
-
-        // Do any additional setup after loading the view.
+        renderData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -86,15 +84,4 @@ class CourseInfoViewController: UIViewController, UITextFieldDelegate {
         iptSLN2.text = courseSelected["sln2"]
         iptSLN3.text = courseSelected["sln3"]
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

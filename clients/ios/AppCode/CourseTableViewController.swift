@@ -15,15 +15,9 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     private var courses:[Dictionary<String,String>] = []
     private let db = UserDefaults.standard
     public var arrIndex = 0
-    public var fromCell = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // tapRecognizer, placed in viewDidLoad
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: Selector(("longPress:")))
-        
-        self.view.addGestureRecognizer(longPressRecognizer)
         
         // remove cell border
         self.CourseTBView.separatorStyle = UITableViewCellSeparatorStyle.none
@@ -34,14 +28,12 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     //Called, when long press occurred
-    func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
-        
+    @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
-
             let touchPoint = longPressGestureRecognizer.location(in: self.view)
             if let indexPath = CourseTBView.indexPathForRow(at: touchPoint) {
-                var index = indexPath.row
-                
+                arrIndex = indexPath.row
+                self.performSegue(withIdentifier: "CourseInfoSegue", sender: self)
             }
         }
     }
@@ -81,14 +73,15 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
         
         let course = courses[indexPath.row]
         cell?.CourseDisplayName.text = course["displayName"]
+        
+        cell?.isUserInteractionEnabled = true
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
+        cell?.addGestureRecognizer(gestureRecognizer)
         return cell!
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        arrIndex = indexPath.row
-        fromCell = true
-        self.performSegue(withIdentifier: "CourseInfoSegue", sender: self)
         
     }
     
