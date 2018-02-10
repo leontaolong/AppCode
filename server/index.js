@@ -11,7 +11,7 @@ const forceSsl = require('express-force-ssl');
 const app = express();
 app.use(morgan(process.env.LOGFORMAT || 'dev'));
 app.use(bodyParser.json());
-app.use(forceSsl);
+// app.use(forceSsl);
 
 const port = process.env.PORT || '8443'; // 443 for deployment
 const httpPort = 8080; // 80 for deployment

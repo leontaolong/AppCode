@@ -6,7 +6,7 @@ const registerUrl = 'https://sdb.admin.uw.edu/students/uwnetid/register.asp'
 const loginTestUrl = 'https://my.uw.edu'
 
 let Utils = {
-    submit: async function(courseInfo) {
+    submit: async function(courseInfo, res, next) {
         let driver = await new Builder().forBrowser('chrome').build();
         console.log("WebDriver successfully built.")
 
@@ -17,7 +17,7 @@ let Utils = {
             await driver.findElement(By.id('weblogin_netid')).sendKeys(courseInfo.username);
             await driver.findElement(By.id('weblogin_password')).sendKeys(courseInfo.password);
             await driver.findElement(By.xpath('//*[@id="main"]/div[1]/form/ul[2]/li/input')).click();
-            // await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+            res.send("Registration succeesful!");
         } finally {
             // await driver.quit();
         }

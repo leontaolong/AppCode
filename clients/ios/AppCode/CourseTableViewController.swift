@@ -8,13 +8,15 @@
 
 import UIKit
 
-class CourseTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CourseTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,  URLSessionDelegate {
     
     @IBOutlet weak var CourseTBView: UITableView!
      
     private var courses:[Dictionary<String,String>] = []
     private let db = UserDefaults.standard
     public var arrIndex = 0
+//    private let reguestURL = "http://appcode.leontaolong.com/v1/register"
+    private let reguestURL = "http://localhost:8080/v1/register"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +85,7 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        registerCourse(courses[indexPath.row])
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,7 +94,75 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
             destination.arrIndex = arrIndex
         }
     }
- 
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        // Pass test server with self signed certificate
+        if challenge.protectionSpace.host == "https://localhost" {
+            completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
+        } else {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+
+    func registerCourse(_ courseInfo :Dictionary<String,String>) {
+        var request = URLRequest(url: URL(string: reguestURL)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let accountInfo = db.dictionary(forKey: "accountInfo") {
+            var data = courseInfo
+            data["username"] = (accountInfo["email"] as? String)
+            data["password"] = (accountInfo["password"] as? String)
+            
+
+            let jsonData = try? JSONSerialization.data(withJSONObject: data, options: [])
+//            let jsonString = String(data: jsonData!, encoding: .utf8)
+            
+            let configuration = URLSessionConfiguration.default
+            let session = URLSession(configuration: configuration, delegate: self, delegateQueue:OperationQueue.main)
+            
+            request.httpBody = jsonData
+            
+
+            let task = session.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    // check for fundamental networking error
+                    OperationQueue.main.addOperation {
+                        let alert = UIAlertController.init(title: "Error!", message: "Network Error", preferredStyle: .alert)
+                        let action = UIAlertAction.init(title: "Retry", style: .default, handler: {(alert: UIAlertAction!) in
+                            self.viewDidLoad()})
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
+                
+                let responseString = String(data: data, encoding: String.Encoding.utf8)
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    // check for http errors
+                    OperationQueue.main.addOperation {
+                        let alert = UIAlertController.init(title: "Error!", message: responseString, preferredStyle: .alert)
+                        let action = UIAlertAction.init(title: "Retry", style: .default, handler: {(alert: UIAlertAction!) in
+                            self.viewDidLoad()})
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                
+                let alert = UIAlertController.init(title: "Registration Result", message: responseString, preferredStyle: .alert)
+                let action = UIAlertAction.init(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in
+                    self.viewDidLoad()})
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+
+            }
+            task.resume()
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Missing Acount Info, go to Account Info page to complete them.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
