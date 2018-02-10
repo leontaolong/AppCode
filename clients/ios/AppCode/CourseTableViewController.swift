@@ -117,17 +117,12 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
             var data = courseInfo
             data["username"] = (accountInfo["email"] as? String)
             data["password"] = (accountInfo["password"] as? String)
-            
-
             let jsonData = try? JSONSerialization.data(withJSONObject: data, options: [])
-//            let jsonString = String(data: jsonData!, encoding: .utf8)
             
             let configuration = URLSessionConfiguration.default
             let session = URLSession(configuration: configuration, delegate: self, delegateQueue:OperationQueue.main)
             
             request.httpBody = jsonData
-            
-
             let task = session.dataTask(with: request) { data, response, error in
                 guard let data = data, error == nil else {
                     // check for fundamental networking error
@@ -173,12 +168,6 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    /*
-     Show customized activity indicator,
-     actually add activity indicator to passing view
-     
-     @param uiView - add activity indicator to this view
-     */
     func showActivityIndicator(uiView: UIView) {
         loadingContainer.frame = uiView.frame
         loadingContainer.center = uiView.center
@@ -200,23 +189,11 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
         activityIndicator.startAnimating()
     }
     
-    /*
-     Hide activity indicator
-     Actually remove activity indicator from its super view
-     
-     @param uiView - remove activity indicator from this view
-     */
     func hideActivityIndicator(uiView: UIView) {
         activityIndicator.stopAnimating()
         loadingContainer.removeFromSuperview()
     }
     
-    /*
-     Define UIColor from hex value
-     
-     @param rgbValue - hex color value
-     @param alpha - transparency level
-     */
     func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
         let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
