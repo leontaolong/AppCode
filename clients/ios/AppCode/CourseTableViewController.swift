@@ -149,15 +149,14 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
                         alert.addAction(action)
                         self.present(alert, animated: true, completion: nil)
                     }
+                } else {
+                    self.hideActivityIndicator(uiView: self.view)
+                    let alert = UIAlertController.init(title: "Registration Result:", message: responseString, preferredStyle: .alert)
+                    let action = UIAlertAction.init(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in
+                        self.viewDidLoad()})
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
                 }
-                
-                self.hideActivityIndicator(uiView: self.view)
-                let alert = UIAlertController.init(title: "Registration Result:", message: responseString, preferredStyle: .alert)
-                let action = UIAlertAction.init(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in
-                    self.viewDidLoad()})
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
-
             }
             task.resume()
         } else {
