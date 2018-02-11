@@ -19,7 +19,7 @@ let Utils = {
             await driver.findElement(By.id('weblogin_netid')).sendKeys(courseInfo.username);
             await driver.findElement(By.id('weblogin_password')).sendKeys(courseInfo.password);
             await driver.findElement(By.xpath('//*[@id="main"]/div[1]/form/ul[2]/li/input')).click();
-            setTimeout( async () => {
+            await setTimeout( async () => {
                 let currentSite = await driver.getCurrentUrl();
                 if (currentSite != registerUrl) { // login failed
                     res.status(400).send("UW Login Faild: Account info is not correct.");
@@ -32,8 +32,9 @@ let Utils = {
                     - response.send    
                     */
                     res.send("Registration succeesful!");
-                }}
-            , 200)
+                }
+                await driver.quit();
+            }, 200)
         
         } finally {
             // await driver.quit();
