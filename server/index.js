@@ -13,9 +13,8 @@ app.use(morgan(process.env.LOGFORMAT || 'dev'));
 app.use(bodyParser.json());
 // app.use(forceSsl);
 
-const port = process.env.PORT || '8443'; // 443 for deployment
-const httpPort = 8080; // 80 for deployment
-const host = process.env.HOST || '';
+const port = process.env.PORT || '8443';
+const httpPort = process.env.HTTPPORT || '8080';
 
 let certPath = process.env.CERTPATH;
 let keyPath = process.env.KEYPATH;
