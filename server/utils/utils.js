@@ -38,7 +38,7 @@ let Utils = {
                     driver = new Builder().forBrowser('firefox').build();
                     setTimeout( () => {
                         oldDriver.quit();
-                    }, 10000)
+                    }, 20000)
                 }}
             , 200)
         } finally {

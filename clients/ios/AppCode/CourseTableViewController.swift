@@ -19,8 +19,8 @@ class CourseTableViewController: UIViewController, UITableViewDataSource, UITabl
     private var courses:[Dictionary<String,String>] = []
     private let db = UserDefaults.standard
     public var arrIndex = 0
-//    private let reguestURL = "http://appcode.leontaolong.com/v1/register"
-    private let reguestURL = "http://localhost:8080/v1/register"
+    private let reguestURL = "https://appcode.leontaolong.com:8443/v1/register"
+//    private let reguestURL = "http://localhost:8080/v1/register"
     
     override func viewDidLoad() {
         super.viewDidLoad()
