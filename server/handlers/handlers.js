@@ -4,6 +4,7 @@ const express = require('express');
 let CourseInfo = require('../models/courseInfo.js');
 let Utils = require('../utils/utils.js');
 
+
 //export a function from this module 
 module.exports = function() {
     //create a new mux

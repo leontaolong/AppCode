@@ -1,16 +1,18 @@
 "use strict";
 
-const {Builder, By, Key, until} = require('selenium-webdriver');
-require('geckodriver');
+const {Builder,By, Key, until} = require('selenium-webdriver');
 
 const registerUrl = 'https://sdb.admin.uw.edu/students/uwnetid/register.asp'
 const loginTestUrl = 'https://my.uw.edu'
 
+require('geckodriver');
+
+
+var driver = new Builder().forBrowser('firefox').build();
+console.log("WebDriver successfully built.")
 
 let Utils = {
     submit: async (courseInfo, res, next) => {
-        let driver = new Builder().forBrowser('firefox').build();
-        console.log("WebDriver successfully built.")
 
         try {
             await driver.get(registerUrl);
@@ -32,9 +34,13 @@ let Utils = {
                     - response.send    
                     */
                     res.send("Registration succeesful!");
+                    let oldDriver = driver
+                    driver = new Builder().forBrowser('firefox').build();
+                    setTimeout( () => {
+                        oldDriver.quit();
+                    }, 10000)
                 }}
             , 200)
-        
         } finally {
             // await driver.quit();
         }
