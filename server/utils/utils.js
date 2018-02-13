@@ -12,12 +12,12 @@ require('geckodriver');
 console.log("WebDriver successfully built.")
 var inProcess = false;
 
-let browser =''
-if (process.platform === "darwin") { // use chrome for dev 
-    browser = 'chrome';
-} else { // use firefox for prod server
-    browser = 'firefox';
-}
+// let browser =''
+// if (process.platform === "darwin") { // use chrome for dev 
+//     browser = 'chrome';
+// } else { // use firefox for prod server
+   let browser = 'firefox';
+// }
 
 var driver = new Builder().forBrowser(browser).build();
 
@@ -41,9 +41,10 @@ let Utils = {
                 if (currentSite != registerUrl) { // login failed
                     res.status(400).send("UW Login Faild: Account info is not correct.");
                 } else {
-                    let sln1InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[2]/td[1]/input';
-                    let sln2InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[3]/td[1]/input';
-                    let sln3InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[4]/td[1]/input';
+                    let sln1InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[1]/input';
+                    let sln2InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[3]/td[1]/input';
+                    let sln3InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[4]/td[1]/input';
+                                         
                     try {
                         if (courseInfo.sln1) {
                             await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
@@ -57,9 +58,10 @@ let Utils = {
                         await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
     
                         let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
-    
-    
-    
+                        if (result.trim() !== 'Schedule updated.') {
+                            result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
+                        }
+
                         /*TODO:
                         - determine sln
                         - find cell, enter sln x n
@@ -116,34 +118,45 @@ let Utils = {
                 if (currentSite != registerUrl) { // login failed
                     res.status(400).send("UW Login Faild: Account info is not correct.");
                 } else {
-                    /*TODO:
-                    - determine sln
-                    - find cell, enter sln x n
-                    - click submit
-                    - get report from <p>
-                    - response.send    
-                    */
-                    let sln1InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[2]/td[1]/input';
-                    let sln2InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[3]/td[1]/input';
-                    let sln3InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[4]/td[1]/input';
+                    let sln1InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[1]/input';
+                    let sln2InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[3]/td[1]/input';
+                    let sln3InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[4]/td[1]/input';
+                                         
+                    try {
+                        if (courseInfo.sln1) {
+                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
+                        }
+                        if (courseInfo.sln2) {
+                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
+                        }
+                        if (courseInfo.sln3) {
+                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
+                        }
+                        await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
+    
+                        let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
+                        if (result.trim() !== 'Schedule updated.') {
+                            result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
+                        }
 
-                    if (courseInfo.sln1) {
-                        await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
+                        /*TODO:
+                        - determine sln
+                        - find cell, enter sln x n
+                        - click submit
+                        - get report from <p>
+                        - response.send    
+                        */
+                        res.send(result);
+                        setTimeout( () => {
+                            driver.quit();
+                        }, 5000)    
+                    } catch (e) {
+                        res.status(500).send("Server Internal Error");
+                        console.log("ERROR", e)
+                        if (driver) {
+                            driver.quit();
+                        }
                     }
-                    if (courseInfo.sln2) {
-                        await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
-                    }
-                    if (courseInfo.sln3) {
-                        await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
-                    }
-                    await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
-
-                    let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
-
-                    res.send(result);
-                    setTimeout( () => {
-                        driver.quit();
-                    }, 5000)
                 }}
             , 200)
         } catch (e){
