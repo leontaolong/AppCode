@@ -25,7 +25,7 @@ var driver = new Builder().forBrowser(browser).build();
 let Utils = {
     submit: async (courseInfo, res, next) => {
         if (inProcess) {
-            Utils.submitWithProcess(courseInfo, new Builder().forBrowser(browser).build(), res, next)
+            await setTimeout(() => Utils.submitWithProcess(courseInfo, new Builder().forBrowser(browser).build(), res, next), 2000)
         } else {
 
         inProcess = true;
@@ -81,20 +81,16 @@ let Utils = {
                             if (driver) {
                                 let oldDriver = driver
                                 driver = new Builder().forBrowser(browser).build();
-                                setTimeout( () => {
-                                    oldDriver.quit();
-                                }, 5000)
+                                oldDriver.quit();
                             }
                         }
                     }
                     let oldDriver = driver
                     driver = new Builder().forBrowser(browser).build();
-                    setTimeout( () => {
-                        oldDriver.quit();
-                    }, 5000)             
+                    oldDriver.quit();            
                 }
             }
-            , 900)
+            , 800)
         } catch (e){
             res.status(500).send("Server Internal Error");
             inProcess = false;
@@ -102,9 +98,7 @@ let Utils = {
             if (driver) {
                 let oldDriver = driver
                 driver = new Builder().forBrowser(browser).build();
-                setTimeout( () => {
-                    oldDriver.quit();
-                }, 5000)
+                oldDriver.quit();
             }
             // await driver.quit();
         }
@@ -161,24 +155,18 @@ let Utils = {
                             res.status(500).send("Server Internal Error");
                             console.log("ERROR", e)
                             if (driver) {
-                                setTimeout( () => {
-                                    driver.quit();
-                                }, 5000)
+                                driver.quit();
                             }
                         }
                     }
-                    setTimeout( () => {
-                        driver.quit();
-                    }, 5000)             
+                    driver.quit();  
                 }
-            }, 900)
+            }, 800)
         } catch (e){
             res.status(500).send("Server Internal Error");
             console.log("ERROR", e)
             if (driver) {
-                setTimeout( () => {
-                    driver.quit();
-                }, 5000)
+                driver.quit();
             }
             // await driver.quit();
         }
