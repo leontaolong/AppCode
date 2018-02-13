@@ -5,7 +5,7 @@ const {Builder,By, Key, until} = require('selenium-webdriver');
 const registerUrl = 'https://sdb.admin.uw.edu/students/uwnetid/register.asp'
 const loginTestUrl = 'https://my.uw.edu'
 
-require('geckodriver');
+// require('geckodriver');
 
 
 
@@ -88,7 +88,7 @@ let Utils = {
                         }
                     }
                 }}
-            , 200)
+            , 900)
         } catch (e){
             res.status(500).send("Server Internal Error");
             console.log("ERROR", e)
@@ -158,7 +158,7 @@ let Utils = {
                         }
                     }
                 }}
-            , 200)
+            , 900)
         } catch (e){
             res.status(500).send("Server Internal Error");
             console.log("ERROR", e)
