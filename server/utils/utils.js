@@ -8,14 +8,24 @@ const loginTestUrl = 'https://my.uw.edu'
 require('geckodriver');
 
 
-var driver = new Builder().forBrowser('chrome').build();
+
 console.log("WebDriver successfully built.")
 var inProcess = false;
+
+let browser =''
+if (process.platform === "darwin") { // use chrome for dev 
+    browser = 'chrome';
+} else { // use firefox for prod server
+    browser = 'firefox';
+}
+
+var driver = new Builder().forBrowser(browser).build();
+
 
 let Utils = {
     submit: async (courseInfo, res, next) => {
         if (inProcess) {
-            Utils.submitWithProcess(courseInfo, new Builder().forBrowser('chrome').build(), res, next)
+            Utils.submitWithProcess(courseInfo, new Builder().forBrowser(browser).build(), res, next)
         } else {
 
         inProcess = true;
@@ -31,19 +41,50 @@ let Utils = {
                 if (currentSite != registerUrl) { // login failed
                     res.status(400).send("UW Login Faild: Account info is not correct.");
                 } else {
-                    /*TODO:
-                    - determine sln
-                    - find cell, enter sln x n
-                    - click submit
-                    - get report from <p>
-                    - response.send    
-                    */
-                    res.send("Registration successful!");
-                    let oldDriver = driver
-                    driver = new Builder().forBrowser('chrome').build();
-                    setTimeout( () => {
-                        oldDriver.quit();
-                    }, 5000)
+                    let sln1InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[2]/td[1]/input';
+                    let sln2InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[3]/td[1]/input';
+                    let sln3InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[4]/td[1]/input';
+                    try {
+                        if (courseInfo.sln1) {
+                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
+                        }
+                        if (courseInfo.sln2) {
+                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
+                        }
+                        if (courseInfo.sln3) {
+                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
+                        }
+                        await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
+    
+                        let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
+    
+    
+    
+                        /*TODO:
+                        - determine sln
+                        - find cell, enter sln x n
+                        - click submit
+                        - get report from <p>
+                        - response.send    
+                        */
+                        res.send(result);
+                        let oldDriver = driver
+                        driver = new Builder().forBrowser(browser).build();
+                        setTimeout( () => {
+                            oldDriver.quit();
+                        }, 5000)    
+                    } catch (e) {
+                        res.status(500).send("Server Internal Error");
+                        console.log("ERROR", e)
+                        if (driver) {
+                            let oldDriver = driver
+                            driver = new Builder().forBrowser(browser).build();
+                            inProcess = false;
+                            setTimeout( () => {
+                                oldDriver.quit();
+                            }, 5000)
+                        }
+                    }
                 }}
             , 200)
         } catch (e){
@@ -51,7 +92,7 @@ let Utils = {
             console.log("ERROR", e)
             if (driver) {
                 let oldDriver = driver
-                driver = new Builder().forBrowser('chrome').build();
+                driver = new Builder().forBrowser(browser).build();
                 inProcess = false;
                 setTimeout( () => {
                     oldDriver.quit();
@@ -82,7 +123,24 @@ let Utils = {
                     - get report from <p>
                     - response.send    
                     */
-                    res.send("Registration successful!");
+                    let sln1InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[2]/td[1]/input';
+                    let sln2InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[3]/td[1]/input';
+                    let sln3InputXPath = '//*[@id="regform"]/p[2]/table/tbody/tr[4]/td[1]/input';
+
+                    if (courseInfo.sln1) {
+                        await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
+                    }
+                    if (courseInfo.sln2) {
+                        await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
+                    }
+                    if (courseInfo.sln3) {
+                        await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
+                    }
+                    await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
+
+                    let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
+
+                    res.send(result);
                     setTimeout( () => {
                         driver.quit();
                     }, 5000)
