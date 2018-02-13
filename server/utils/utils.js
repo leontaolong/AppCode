@@ -41,61 +41,67 @@ let Utils = {
                 if (currentSite != registerUrl) { // login failed
                     res.status(400).send("UW Login Faild: Account info is not correct.");
                 } else {
-                    let sln1InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[1]/input';
-                    let sln2InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[3]/td[1]/input';
-                    let sln3InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[4]/td[1]/input';
-                                         
-                    try {
-                        if (courseInfo.sln1) {
-                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
-                        }
-                        if (courseInfo.sln2) {
-                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
-                        }
-                        if (courseInfo.sln3) {
-                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
-                        }
-                        await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
-    
-                        let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
-                        if (result.trim() !== 'Schedule updated.') {
-                            result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
-                        }
+                    var formNotExists = await JSON.parse(JSON.stringify(await driver.findElements(By.xpath('html/body/div[2]/form')))).length
+                    if (formNotExists == 0) {
+                        res.send("Registration is not yet open."); 
+                    } else {
+                        let sln1InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[1]/input';
+                        let sln2InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[3]/td[1]/input';
+                        let sln3InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[4]/td[1]/input';
+                                            
+                        try {
+                            if (courseInfo.sln1) {
+                                await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
+                            }
+                            if (courseInfo.sln2) {
+                                await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
+                            }
+                            if (courseInfo.sln3) {
+                                await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
+                            }
+                            await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
+        
+                            let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
+                            if (result.trim() !== 'Schedule updated.') {
+                                result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
+                            }
 
-                        /*TODO:
-                        - determine sln
-                        - find cell, enter sln x n
-                        - click submit
-                        - get report from <p>
-                        - response.send    
-                        */
-                        res.send(result);
-                        let oldDriver = driver
-                        driver = new Builder().forBrowser(browser).build();
-                        setTimeout( () => {
-                            oldDriver.quit();
-                        }, 5000)    
-                    } catch (e) {
-                        res.status(500).send("Server Internal Error");
-                        console.log("ERROR", e)
-                        if (driver) {
-                            let oldDriver = driver
-                            driver = new Builder().forBrowser(browser).build();
+                            /*TODO:
+                            - determine sln
+                            - find cell, enter sln x n
+                            - click submit
+                            - get report from <p>
+                            - response.send    
+                            */
+                            res.send(result); 
+                        } catch (e) {
+                            res.status(500).send("Server Internal Error");
                             inProcess = false;
-                            setTimeout( () => {
-                                oldDriver.quit();
-                            }, 5000)
+                            console.log("ERROR", e)
+                            if (driver) {
+                                let oldDriver = driver
+                                driver = new Builder().forBrowser(browser).build();
+                                setTimeout( () => {
+                                    oldDriver.quit();
+                                }, 5000)
+                            }
                         }
                     }
-                }}
+                    let oldDriver = driver
+                    driver = new Builder().forBrowser(browser).build();
+                    setTimeout( () => {
+                        oldDriver.quit();
+                    }, 5000)             
+                }
+            }
             , 900)
         } catch (e){
             res.status(500).send("Server Internal Error");
+            inProcess = false;
             console.log("ERROR", e)
             if (driver) {
                 let oldDriver = driver
                 driver = new Builder().forBrowser(browser).build();
-                inProcess = false;
                 setTimeout( () => {
                     oldDriver.quit();
                 }, 5000)
@@ -106,7 +112,7 @@ let Utils = {
         }
     },
     submitWithProcess: async (courseInfo, driver, res, next) => {
-        try {
+         try {
             await driver.get(registerUrl);
 
             // login with credentials
@@ -118,52 +124,61 @@ let Utils = {
                 if (currentSite != registerUrl) { // login failed
                     res.status(400).send("UW Login Faild: Account info is not correct.");
                 } else {
-                    let sln1InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[1]/input';
-                    let sln2InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[3]/td[1]/input';
-                    let sln3InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[4]/td[1]/input';
-                                         
-                    try {
-                        if (courseInfo.sln1) {
-                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
-                        }
-                        if (courseInfo.sln2) {
-                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
-                        }
-                        if (courseInfo.sln3) {
-                            await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
-                        }
-                        await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
-    
-                        let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
-                        if (result.trim() !== 'Schedule updated.') {
-                            result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
-                        }
+                    var formNotExists = await JSON.parse(JSON.stringify(await driver.findElements(By.xpath('html/body/div[2]/form')))).length
+                    if (formNotExists == 0) {
+                        res.send("Registration is not yet open."); 
+                    } else {
+                        let sln1InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[1]/input';
+                        let sln2InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[3]/td[1]/input';
+                        let sln3InputXPath = 'html/body/div[2]/form/p[2]/table/tbody/tr[4]/td[1]/input';
+                                            
+                        try {
+                            if (courseInfo.sln1) {
+                                await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln1);
+                            }
+                            if (courseInfo.sln2) {
+                                await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln2);
+                            }
+                            if (courseInfo.sln3) {
+                                await driver.findElement(By.xpath(sln1InputXPath)).sendKeys(courseInfo.sln3);
+                            }
+                            await driver.findElement(By.xpath('//*[@id="regform"]/input[7]')).click();
+        
+                            let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
+                            if (result.trim() !== 'Schedule updated.') {
+                                result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
+                            }
 
-                        /*TODO:
-                        - determine sln
-                        - find cell, enter sln x n
-                        - click submit
-                        - get report from <p>
-                        - response.send    
-                        */
-                        res.send(result);
-                        setTimeout( () => {
-                            driver.quit();
-                        }, 5000)    
-                    } catch (e) {
-                        res.status(500).send("Server Internal Error");
-                        console.log("ERROR", e)
-                        if (driver) {
-                            driver.quit();
+                            /*TODO:
+                            - determine sln
+                            - find cell, enter sln x n
+                            - click submit
+                            - get report from <p>
+                            - response.send    
+                            */
+                            res.send(result); 
+                        } catch (e) {
+                            res.status(500).send("Server Internal Error");
+                            console.log("ERROR", e)
+                            if (driver) {
+                                setTimeout( () => {
+                                    driver.quit();
+                                }, 5000)
+                            }
                         }
                     }
-                }}
-            , 900)
+                    setTimeout( () => {
+                        driver.quit();
+                    }, 5000)             
+                }
+            }, 900)
         } catch (e){
             res.status(500).send("Server Internal Error");
             console.log("ERROR", e)
             if (driver) {
-                driver.quit();
+                setTimeout( () => {
+                    driver.quit();
+                }, 5000)
             }
             // await driver.quit();
         }
