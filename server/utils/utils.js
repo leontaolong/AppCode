@@ -7,9 +7,6 @@ const loginTestUrl = 'https://my.uw.edu'
 
 // require('geckodriver');
 
-
-
-console.log("WebDriver successfully built.")
 var inProcess = false;
 
 // let browser =''
@@ -20,7 +17,7 @@ var inProcess = false;
 // }
 
 var driver = new Builder().forBrowser(browser).build();
-
+console.log("WebDriver successfully built.")
 
 let Utils = {
     submit: async (courseInfo, res, next) => {
@@ -64,6 +61,8 @@ let Utils = {
                             let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
                             if (result.trim() !== 'Schedule updated.') {
                                 result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
+                            } else {
+                                result += "\nRegistration Successful!"
                             }
 
                             /*TODO:
@@ -90,7 +89,7 @@ let Utils = {
                     oldDriver.quit();            
                 }
             }
-            , 800)
+            , 900)
         } catch (e){
             res.status(500).send("Server Internal Error");
             inProcess = false;
@@ -141,6 +140,8 @@ let Utils = {
                             let result = await driver.findElement(By.xpath('//*[@id="doneDiv"]/b')).getText()
                             if (result.trim() !== 'Schedule updated.') {
                                 result = "Schedule not updated: " + await driver.findElement(By.xpath('html/body/div[2]/form/p[2]/table/tbody/tr[2]/td[5]')).getText()
+                            } else {
+                                result += "\nRegistration Successful!"
                             }
 
                             /*TODO:
@@ -161,7 +162,7 @@ let Utils = {
                     }
                     driver.quit();  
                 }
-            }, 800)
+            }, 900)
         } catch (e){
             res.status(500).send("Server Internal Error");
             console.log("ERROR", e)
